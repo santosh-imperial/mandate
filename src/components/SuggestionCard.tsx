@@ -1,7 +1,6 @@
-
 import { Suggestion, NewsItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { AreaChart, ExternalLink, Plus } from "lucide-react";
+import { AreaChart, ExternalLink } from "lucide-react";
 
 interface SuggestionCardProps {
   suggestion: Suggestion;
@@ -114,14 +113,6 @@ export const SuggestionCard = ({ suggestion, index }: SuggestionCardProps) => {
       style={{ animationDelay: `${index * 50}ms` }}
     >
       {renderContent()}
-      
-      {/* Plus button */}
-      <button 
-        className="absolute top-3 right-3 w-6 h-6 bg-white rounded-full shadow-sm flex items-center justify-center hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
-        aria-label="Add suggestion"
-      >
-        <Plus className="w-4 h-4" />
-      </button>
     </div>
   );
 };
