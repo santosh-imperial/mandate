@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +16,7 @@ import {
   Key, 
   MemoryStick, 
   Heart, 
-  Tool, 
+  Wrench, // Changed from 'Tool' to 'Wrench'
   Computer, 
   MessageSquare, 
   Book, 
@@ -438,7 +437,7 @@ export const CustomMandateCreation = ({ onSave, onCancel }: CustomMandateCreatio
             <Card className="p-4">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <Tool className="h-5 w-5 text-primary" />
+                  <Wrench className="h-5 w-5 text-primary" />
                   <div>
                     <h3 className="font-medium">Tools & API Access</h3>
                     <p className="text-sm text-muted-foreground">Connect external tools and APIs</p>
