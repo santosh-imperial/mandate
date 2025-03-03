@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Check, List, Mic, Plus } from "lucide-react";
 import { toast } from "sonner";
+import { CalendarIntegration } from "@/components/CalendarIntegration";
 
 export default function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
@@ -23,7 +24,6 @@ export default function TasksPage() {
   });
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
-  // Filter tasks based on completion status and tag
   const completedTasks = tasks.filter(task => 
     task.completed && (filterTag ? task.tags?.includes(filterTag) : true)
   );
@@ -32,12 +32,10 @@ export default function TasksPage() {
     !task.completed && (filterTag ? task.tags?.includes(filterTag) : true)
   );
 
-  // Get all unique tags from tasks
   const allTags = Array.from(
     new Set(tasks.flatMap(task => task.tags || []))
   );
 
-  // Handle task completion toggle
   const handleToggleComplete = (id: string) => {
     setTasks(tasks.map(task => 
       task.id === id ? { ...task, completed: !task.completed } : task
@@ -51,7 +49,6 @@ export default function TasksPage() {
     );
   };
 
-  // Handle task deletion
   const handleDeleteTask = (id: string) => {
     const taskToDelete = tasks.find(task => task.id === id);
     if (!taskToDelete) return;
@@ -60,7 +57,6 @@ export default function TasksPage() {
     toast(`Task deleted: ${taskToDelete.title}`);
   };
 
-  // Handle adding new task
   const handleAddTask = () => {
     if (!newTask.title.trim()) {
       toast.error("Task title cannot be empty");
@@ -87,7 +83,6 @@ export default function TasksPage() {
     toast.success(`New task added: ${newTask.title}`);
   };
 
-  // Handle adding task via voice or chat
   const handleAddTaskViaVoice = (title: string, description?: string) => {
     if (!title.trim()) {
       toast.error("Task title cannot be empty");
@@ -109,13 +104,11 @@ export default function TasksPage() {
     toast.success(`New task added: ${title}`);
   };
 
-  // Handle editing a task
   const handleEditTask = (task: Task) => {
     setEditTask(task);
     setIsAddDialogOpen(true);
   };
 
-  // Handle saving an edited task
   const handleSaveEdit = () => {
     if (!editTask) return;
     
@@ -128,7 +121,6 @@ export default function TasksPage() {
     toast.success(`Task updated: ${editTask.title}`);
   };
 
-  // Reset form when dialog closes
   const handleDialogClose = () => {
     setEditTask(null);
     setNewTask({
@@ -136,6 +128,11 @@ export default function TasksPage() {
       description: "",
       priority: "medium",
     });
+  };
+
+  const handleImportTasks = (importedTasks: Task[]) => {
+    setTasks(prev => [...importedTasks, ...prev]);
+    toast.success(`Imported ${importedTasks.length} tasks from calendar`);
   };
 
   return (
@@ -158,8 +155,8 @@ export default function TasksPage() {
           </p>
         </div>
 
-        {/* Add Task Buttons */}
         <div className="flex gap-2">
+          <CalendarIntegration onImportTasks={handleImportTasks} />
           <Button 
             variant="outline" 
             className="gap-2"
@@ -254,7 +251,6 @@ export default function TasksPage() {
         </div>
       </div>
       
-      {/* Voice/Chat Task Input Modal */}
       {showVoiceInput && (
         <TaskVoiceInput 
           onAddTask={handleAddTaskViaVoice}
@@ -262,7 +258,6 @@ export default function TasksPage() {
         />
       )}
       
-      {/* Filter by tags */}
       {allTags.length > 0 && (
         <div className="mb-6">
           <div className="text-sm font-medium mb-2">Filter by tag</div>
@@ -290,7 +285,6 @@ export default function TasksPage() {
         </div>
       )}
       
-      {/* Task Lists */}
       <Tabs defaultValue="pending" className="w-full">
         <TabsList className="mb-4">
           <TabsTrigger value="pending" className="gap-2">

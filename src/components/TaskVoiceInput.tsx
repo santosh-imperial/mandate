@@ -15,24 +15,24 @@ export function TaskVoiceInput({ onAddTask, onClose }: TaskVoiceInputProps) {
   const [transcript, setTranscript] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [showTyping, setShowTyping] = useState(false);
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const recognitionRef = useRef<any>(null);
 
   useEffect(() => {
     // Check if browser supports SpeechRecognition
     if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
       recognitionRef.current = new SpeechRecognition();
       recognitionRef.current.continuous = true;
       recognitionRef.current.interimResults = true;
       
-      recognitionRef.current.onresult = (event) => {
+      recognitionRef.current.onresult = (event: any) => {
         const current = event.resultIndex;
         const result = event.results[current];
         const transcriptValue = result[0].transcript;
         setTranscript(transcriptValue);
       };
 
-      recognitionRef.current.onerror = (event) => {
+      recognitionRef.current.onerror = (event: any) => {
         console.error('Speech recognition error', event);
         toast.error("Failed to recognize speech. Please try again.");
         setIsListening(false);

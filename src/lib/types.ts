@@ -41,3 +41,20 @@ export interface Task {
   tags?: string[];
   createdAt: Date;
 }
+
+export interface CalendarEvent {
+  id: string;
+  title: string;
+  start: Date;
+  end: Date;
+  description?: string;
+  location?: string;
+  source: 'google' | 'outlook' | 'apple' | 'manual';
+}
+
+export interface CalendarIntegration {
+  id: string;
+  type: 'google' | 'outlook' | 'apple';
+  connected: boolean;
+  lastSynced?: Date;
+}
