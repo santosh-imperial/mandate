@@ -1,4 +1,3 @@
-
 import { Event as EventType } from "@/lib/types";
 import { SuggestionCarousel } from "./SuggestionCarousel";
 import { cn } from "@/lib/utils";
@@ -11,10 +10,8 @@ interface EventProps {
 const categoryColors: Record<string, string> = {
   meeting: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
   travel: "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300",
-  reminder: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300",
-  errand: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
-  goal: "bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-300",
   routine: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300",
+  focus: "bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-300",
   other: "bg-[hsl(var(--event-background))] text-[hsl(var(--event-foreground))]"
 };
 

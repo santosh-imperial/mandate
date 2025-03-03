@@ -75,7 +75,7 @@ export const events: Event[] = [
     title: "Respond to emails",
     time: "12 PM",
     hourIndex: 12,
-    category: "errand",
+    category: "routine",
     suggestions: [
       {
         id: "suggestion-4-1",
@@ -135,7 +135,7 @@ export const events: Event[] = [
     title: "Buy Book for Friend's Birthday",
     time: "5 PM",
     hourIndex: 17,
-    category: "errand",
+    category: "routine",
     suggestions: [
       {
         id: "suggestion-8-1",
@@ -150,7 +150,7 @@ export const events: Event[] = [
     title: "1 hour of code",
     time: "6 PM",
     hourIndex: 18,
-    category: "goal",
+    category: "focus",
     suggestions: [
       {
         id: "suggestion-9-1",
@@ -165,7 +165,7 @@ export const events: Event[] = [
     title: "1 hour of Chinese",
     time: "7 PM",
     hourIndex: 19,
-    category: "goal",
+    category: "focus",
     suggestions: [
       {
         id: "suggestion-10-1",

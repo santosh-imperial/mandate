@@ -12,10 +12,8 @@ export interface Event {
 export type EventCategory = 
   | 'meeting'
   | 'travel'
-  | 'reminder'
-  | 'errand'
-  | 'goal'
-  | 'routine';
+  | 'routine'
+  | 'focus';
 
 export type ContentType = "text" | "image" | "graph" | "link" | "news";
 

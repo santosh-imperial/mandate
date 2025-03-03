@@ -81,10 +81,8 @@ export const Calendar = () => {
         <div className="text-sm font-medium mr-2">Event types:</div>
         <div className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 text-xs px-2 py-1 rounded">Meeting</div>
         <div className="bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300 text-xs px-2 py-1 rounded">Travel</div>
-        <div className="bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300 text-xs px-2 py-1 rounded">Reminder</div>
-        <div className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 text-xs px-2 py-1 rounded">Errand</div>
-        <div className="bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-300 text-xs px-2 py-1 rounded">Goal</div>
         <div className="bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300 text-xs px-2 py-1 rounded">Routine</div>
+        <div className="bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-300 text-xs px-2 py-1 rounded">Focus</div>
       </div>
 
       <div className="border border-border rounded-xl overflow-hidden shadow-sm bg-background">
