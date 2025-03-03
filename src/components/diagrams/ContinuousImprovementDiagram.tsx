@@ -8,7 +8,8 @@ import {
   Position,
   MarkerType,
   useNodesState,
-  useEdgesState
+  useEdgesState,
+  BackgroundVariant
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
@@ -130,7 +131,7 @@ export function ContinuousImprovementDiagram() {
         fitView
         proOptions={{ hideAttribution: true }}
       >
-        <Background color="#f1f5f9" variant="dots" gap={12} size={1} />
+        <Background color="#f1f5f9" variant={"dots" as BackgroundVariant} gap={12} size={1} />
       </ReactFlow>
     </div>
   );
