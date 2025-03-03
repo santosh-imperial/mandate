@@ -1,9 +1,11 @@
+
 import { useState } from "react";
 import { format, addDays, subDays, isSameDay } from "date-fns";
 import { TimeSlot } from "./TimeSlot";
 import { events } from "@/lib/data";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Event } from "@/lib/types";
+import { userConfiguredMandates } from "@/lib/mandate-templates";
 
 export const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -42,6 +44,14 @@ export const Calendar = () => {
   
   const timePosition = getTimePosition();
 
+  // Calculate number of active mandates for the selected day
+  const getActiveMandatesCount = () => {
+    // Filter mandates that are active for the selected day
+    return userConfiguredMandates.filter(mandate => mandate.isActive).length;
+  };
+
+  const activeMandatesCount = getActiveMandatesCount();
+
   return (
     <div className="w-full max-w-[1200px] mx-auto">
       <div className="flex items-center justify-between mb-6 px-2">
@@ -50,13 +60,18 @@ export const Calendar = () => {
         </h2>
         
         <div className="flex items-center space-x-2">
-          <button 
-            onClick={goToToday}
-            disabled={isTodaySelected} 
-            className="px-3 py-1 text-sm rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors disabled:opacity-50"
-          >
-            Today
-          </button>
+          <div className="flex flex-col items-center mr-4">
+            <button 
+              onClick={goToToday}
+              disabled={isTodaySelected} 
+              className="px-3 py-1 text-sm rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors disabled:opacity-50"
+            >
+              Today
+            </button>
+            <div className="text-xs text-muted-foreground mt-1">
+              {activeMandatesCount} mandate{activeMandatesCount !== 1 ? 's' : ''} running
+            </div>
+          </div>
           <div className="flex items-center">
             <button 
               onClick={goToPreviousDay}
