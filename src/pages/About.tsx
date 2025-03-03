@@ -1,6 +1,9 @@
 
 import React from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { MandateAgentDiagram } from "@/components/diagrams/MandateAgentDiagram";
+import { ContinuousImprovementDiagram } from "@/components/diagrams/ContinuousImprovementDiagram";
+import { MemoryLayerDiagram } from "@/components/diagrams/MemoryLayerDiagram";
 
 const About = () => {
   return (
@@ -40,48 +43,36 @@ const About = () => {
             </p>
           </section>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
-            {/* Infographic 1: AI Agents */}
-            <div className="bg-card rounded-xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center space-y-4">
-              <div className="w-full aspect-video overflow-hidden rounded-lg bg-secondary mb-4 flex items-center justify-center">
-                <img 
-                  src="https://images.unsplash.com/photo-1518770660439-4636190af475" 
-                  alt="AI Agent Visualization" 
-                  className="w-full h-full object-cover"
-                />
+          <div className="grid grid-cols-1 lg:grid-cols-1 gap-12 mt-12">
+            {/* Infographic 1: AI Agents - Now with Flow Diagram */}
+            <div className="bg-card rounded-xl p-6 shadow-sm hover:shadow-md transition-all">
+              <h3 className="text-xl font-semibold mb-4 text-center">Powerful AI Agents</h3>
+              <div className="mb-6">
+                <MandateAgentDiagram />
               </div>
-              <h3 className="text-xl font-semibold">Powerful AI Agents</h3>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground text-center">
                 Each suggestion is powered by an AI agent called a "Mandate." These agents leverage LLM technology with access to multiple architectural components including tool use, computer use, and knowledge bases.
               </p>
             </div>
             
-            {/* Infographic 2: Continuous Improvement */}
-            <div className="bg-card rounded-xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center space-y-4">
-              <div className="w-full aspect-video overflow-hidden rounded-lg bg-secondary mb-4 flex items-center justify-center">
-                <img 
-                  src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e" 
-                  alt="Continuous Improvement" 
-                  className="w-full h-full object-cover"
-                />
+            {/* Infographic 2: Continuous Improvement - Now with Flow Diagram */}
+            <div className="bg-card rounded-xl p-6 shadow-sm hover:shadow-md transition-all">
+              <h3 className="text-xl font-semibold mb-4 text-center">Continuous Improvement</h3>
+              <div className="mb-6">
+                <ContinuousImprovementDiagram />
               </div>
-              <h3 className="text-xl font-semibold">Continuous Improvement</h3>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground text-center">
                 These agents continuously improve their recommendations as you interact with them, learning from your preferences and behaviors to deliver increasingly relevant suggestions.
               </p>
             </div>
             
-            {/* Infographic 3: Memory Layer */}
-            <div className="bg-card rounded-xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center space-y-4">
-              <div className="w-full aspect-video overflow-hidden rounded-lg bg-secondary mb-4 flex items-center justify-center">
-                <img 
-                  src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5" 
-                  alt="Memory Layer" 
-                  className="w-full h-full object-cover"
-                />
+            {/* Infographic 3: Memory Layer - Now with Flow Diagram */}
+            <div className="bg-card rounded-xl p-6 shadow-sm hover:shadow-md transition-all">
+              <h3 className="text-xl font-semibold mb-4 text-center">Collaborative Memory</h3>
+              <div className="mb-6">
+                <MemoryLayerDiagram />
               </div>
-              <h3 className="text-xl font-semibold">Collaborative Memory</h3>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground text-center">
                 Agents interact with each other through a shared memory layer, improving collective intelligence and enhancing all recommendations across the platform.
               </p>
             </div>
@@ -104,7 +95,7 @@ const About = () => {
                 </ul>
               </div>
               <div>
-                <div className="w-full aspect-video overflow-hidden rounded-lg bg-secondary">
+                <div className="w-full aspect-video overflow-hidden rounded-lg bg-secondary flex items-center justify-center">
                   <img 
                     src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7" 
                     alt="Mandate Intelligence" 
