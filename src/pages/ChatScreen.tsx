@@ -18,7 +18,7 @@ const ChatScreen = () => {
       id: "1",
       content: "How about I help you learn about basics of investing? and every week I will share with you the information that will help you make investment decisions",
       isUser: false,
-      suggestions: ["Yes, that sounds good", "help me only learn", "Help me only with information"]
+      suggestions: ["Yes, that sounds good"]
     }
   ]);
   const [inputValue, setInputValue] = useState("");
@@ -38,14 +38,59 @@ const ChatScreen = () => {
       
       // Simulate AI response after a short delay
       setTimeout(() => {
-        const newAiMessage: ChatMessage = {
-          id: (Date.now() + 1).toString(),
-          content: "I understand you're interested in that topic. What specific aspects would you like to know more about?",
-          isUser: false,
-          suggestions: ["Tell me more", "Can you give examples?", "What are the risks?"]
-        };
+        let newAiMessage: ChatMessage;
         
-        setMessages(prev => [...prev, newAiMessage]);
+        // Check the message count to determine which response to send
+        if (messages.length === 1) {
+          newAiMessage = {
+            id: (Date.now() + 1).toString(),
+            content: "Perfect! This is the plan, I am thinking. I will create a learning flow and email you when it is ready.",
+            isUser: false,
+          };
+          
+          setMessages(prev => [...prev, newAiMessage]);
+          
+          // Add the second AI message after another short delay
+          setTimeout(() => {
+            const secondAiMessage: ChatMessage = {
+              id: (Date.now() + 2).toString(),
+              content: "For helping you with the investment decisions, I need some more information from you. I would recommend going over them after a week or two of learning but If you prefer to get started now? I can go ahead",
+              isUser: false,
+              suggestions: ["What do you think of the plan?"]
+            };
+            
+            setMessages(prev => [...prev, secondAiMessage]);
+          }, 1500);
+        } else if (messages.length === 3) {
+          newAiMessage = {
+            id: (Date.now() + 1).toString(),
+            content: "The first choice we need to make is",
+            isUser: false,
+          };
+          
+          setMessages(prev => [...prev, newAiMessage]);
+          
+          // Add the model selection message
+          setTimeout(() => {
+            const modelSelectionMessage: ChatMessage = {
+              id: (Date.now() + 2).toString(),
+              content: "Choose the intelligence your mandate should have",
+              isUser: false,
+              suggestions: ["GPT", "Claude"]
+            };
+            
+            setMessages(prev => [...prev, modelSelectionMessage]);
+          }, 1500);
+        } else {
+          newAiMessage = {
+            id: (Date.now() + 1).toString(),
+            content: "I understand. Let's proceed with that option.",
+            isUser: false,
+            suggestions: ["Tell me more", "What's next?", "Can I change my mind later?"]
+          };
+          
+          setMessages(prev => [...prev, newAiMessage]);
+        }
       }, 1000);
     }
   };
@@ -62,14 +107,59 @@ const ChatScreen = () => {
     
     // Simulate AI response after a short delay
     setTimeout(() => {
-      const newAiMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        content: `Great choice! Here's some information about "${suggestion}"...`,
-        isUser: false,
-        suggestions: ["Tell me more", "Can you explain differently?", "What should I do next?"]
-      };
+      let newAiMessage: ChatMessage;
       
-      setMessages(prev => [...prev, newAiMessage]);
+      // Check the message count to determine which response to send
+      if (messages.length === 1 && suggestion === "Yes, that sounds good") {
+        newAiMessage = {
+          id: (Date.now() + 1).toString(),
+          content: "Perfect! This is the plan, I am thinking. I will create a learning flow and email you when it is ready.",
+          isUser: false,
+        };
+        
+        setMessages(prev => [...prev, newAiMessage]);
+        
+        // Add the second AI message after another short delay
+        setTimeout(() => {
+          const secondAiMessage: ChatMessage = {
+            id: (Date.now() + 2).toString(),
+            content: "For helping you with the investment decisions, I need some more information from you. I would recommend going over them after a week or two of learning but If you prefer to get started now? I can go ahead",
+            isUser: false,
+            suggestions: ["What do you think of the plan?"]
+          };
+          
+          setMessages(prev => [...prev, secondAiMessage]);
+        }, 1500);
+      } else if (suggestion === "What do you think of the plan?") {
+        newAiMessage = {
+          id: (Date.now() + 1).toString(),
+          content: "The first choice we need to make is",
+          isUser: false,
+        };
+        
+        setMessages(prev => [...prev, newAiMessage]);
+        
+        // Add the model selection message
+        setTimeout(() => {
+          const modelSelectionMessage: ChatMessage = {
+            id: (Date.now() + 2).toString(),
+            content: "Choose the intelligence your mandate should have",
+            isUser: false,
+            suggestions: ["GPT", "Claude"]
+          };
+          
+          setMessages(prev => [...prev, modelSelectionMessage]);
+        }, 1500);
+      } else {
+        newAiMessage = {
+          id: (Date.now() + 1).toString(),
+          content: "Great! I'll help you with that next step.",
+          isUser: false,
+          suggestions: ["Tell me more", "What's next?", "Can I change my mind later?"]
+        };
+        
+        setMessages(prev => [...prev, newAiMessage]);
+      }
     }, 1000);
   };
 
@@ -102,9 +192,11 @@ const ChatScreen = () => {
             </Button>
             <h1 className="text-xl font-medium">MANDATE</h1>
           </div>
-          <Button variant="ghost" size="icon" aria-label="Menu">
-            <Menu className="h-5 w-5" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon" aria-label="Menu">
+              <Menu className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -134,6 +226,32 @@ const ChatScreen = () => {
                       {suggestion}
                     </button>
                   ))}
+                </div>
+              )}
+              
+              {/* Model Selection Cards */}
+              {!message.isUser && message.content === "Choose the intelligence your mandate should have" && (
+                <div className="mt-3 grid grid-cols-2 gap-3">
+                  <button 
+                    onClick={() => handleSuggestionClick("GPT")}
+                    className="flex flex-col items-center p-4 border border-border rounded-lg hover:bg-accent transition-colors"
+                  >
+                    <div className="w-12 h-12 bg-muted flex items-center justify-center rounded mb-2">
+                      <span className="text-muted-foreground">🖼️</span>
+                    </div>
+                    <span className="font-medium">GPT</span>
+                    <span className="text-xs text-muted-foreground">Get the best reasoning models from OpenAI</span>
+                  </button>
+                  <button 
+                    onClick={() => handleSuggestionClick("Claude")}
+                    className="flex flex-col items-center p-4 border border-border rounded-lg hover:bg-accent transition-colors"
+                  >
+                    <div className="w-12 h-12 bg-muted flex items-center justify-center rounded mb-2">
+                      <span className="text-muted-foreground">🖼️</span>
+                    </div>
+                    <span className="font-medium">Claude</span>
+                    <span className="text-xs text-muted-foreground">Get the best reasoning models from Anthropic</span>
+                  </button>
                 </div>
               )}
             </div>
