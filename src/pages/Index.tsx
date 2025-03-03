@@ -1,12 +1,44 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { Calendar } from "@/components/Calendar";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background flex flex-col">
+      <header className="border-b border-border py-4 px-6">
+        <div className="max-w-[1200px] mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
+              <span className="font-semibold text-sm text-primary-foreground">FP</span>
+            </div>
+            <h1 className="text-xl font-medium">FlowPlanner</h1>
+          </div>
+          
+          <nav className="hidden md:flex items-center space-x-6">
+            <a href="#" className="text-sm font-medium transition-colors hover:text-muted-foreground">Calendar</a>
+            <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Tasks</a>
+            <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Projects</a>
+            <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Analytics</a>
+          </nav>
+          
+          <div className="flex items-center gap-2">
+            <button className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground">
+              <span className="text-sm font-medium">JS</span>
+            </button>
+          </div>
+        </div>
+      </header>
+      
+      <main className="flex-grow p-6">
+        <Calendar />
+      </main>
+      
+      <footer className="border-t border-border py-4 px-6">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="text-xs text-muted-foreground">
+            &copy; {new Date().getFullYear()} FlowPlanner. All rights reserved.
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
