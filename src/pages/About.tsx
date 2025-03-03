@@ -1,9 +1,10 @@
-
 import React from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { MandateAgentDiagram } from "@/components/diagrams/MandateAgentDiagram";
 import { ContinuousImprovementDiagram } from "@/components/diagrams/ContinuousImprovementDiagram";
 import { MemoryLayerDiagram } from "@/components/diagrams/MemoryLayerDiagram";
+import { Navbar } from "@/components/Navbar";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -11,19 +12,15 @@ const About = () => {
       <header className="border-b border-border py-4 px-6">
         <div className="max-w-[1200px] mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="font-semibold text-sm text-primary-foreground">M</span>
-            </div>
-            <h1 className="text-xl font-medium">Mandate</h1>
+            <Link to="/" className="flex items-center gap-2">
+              <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
+                <span className="font-semibold text-sm text-primary-foreground">M</span>
+              </div>
+              <h1 className="text-xl font-medium">Mandate</h1>
+            </Link>
           </div>
           
-          <nav className="hidden md:flex items-center space-x-6">
-            <a href="/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Calendar</a>
-            <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Tasks</a>
-            <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Projects</a>
-            <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Analytics</a>
-            <a href="/about" className="text-sm font-medium transition-colors hover:text-muted-foreground">About</a>
-          </nav>
+          <Navbar />
           
           <div className="flex items-center gap-2">
             <ThemeToggle />

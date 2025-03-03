@@ -3,6 +3,7 @@ import { Calendar } from "@/components/Calendar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Link } from "react-router-dom";
 import { FloatingSearchBar } from "@/components/FloatingSearchBar";
+import { Navbar } from "@/components/Navbar";
 
 const Index = () => {
   return (
@@ -16,13 +17,7 @@ const Index = () => {
             <h1 className="text-xl font-medium">Mandate</h1>
           </div>
           
-          <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/" className="text-sm font-medium transition-colors hover:text-muted-foreground">Calendar</Link>
-            <Link to="/tasks" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Tasks</Link>
-            <Link to="/mandates" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Mandate Templates</Link>
-            <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Analytics</a>
-            <Link to="/about" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">About</Link>
-          </nav>
+          <Navbar />
           
           <div className="flex items-center gap-2">
             <ThemeToggle />

@@ -1,8 +1,9 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Menu, Send } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 interface ChatMessage {
   id: string;
@@ -178,27 +179,7 @@ const ChatScreen = () => {
 
   return (
     <div className="flex flex-col h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border py-4 px-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={() => navigate("/")}
-              aria-label="Back"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <h1 className="text-xl font-medium">MANDATE</h1>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" aria-label="Menu">
-              <Menu className="h-5 w-5" />
-            </Button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Chat Messages Area */}
       <div className="flex-grow overflow-y-auto p-4 md:p-6">
