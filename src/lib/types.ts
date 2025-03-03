@@ -1,4 +1,3 @@
-
 import { ReactNode } from "react";
 
 export interface Event {
@@ -13,12 +12,10 @@ export interface Event {
 export type EventCategory = 
   | 'meeting'
   | 'travel'
-  | 'task'
   | 'reminder'
-  | 'social'
-  | 'health'
-  | 'learning'
-  | 'other';
+  | 'errand'
+  | 'goal'
+  | 'routine';
 
 export type ContentType = "text" | "image" | "graph" | "link" | "news";
 
