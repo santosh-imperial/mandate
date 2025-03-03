@@ -7,6 +7,7 @@ export const events: Event[] = [
     title: "Breakfast",
     time: "8 AM",
     hourIndex: 8,
+    category: "routine",
     suggestions: [
       {
         id: "suggestion-1-1",
@@ -21,6 +22,7 @@ export const events: Event[] = [
     title: "Travel to Work",
     time: "9 AM",
     hourIndex: 9,
+    category: "travel",
     suggestions: [
       {
         id: "suggestion-2-1",
@@ -41,6 +43,7 @@ export const events: Event[] = [
     title: "Check Market & News",
     time: "11 AM",
     hourIndex: 11,
+    category: "routine",
     suggestions: [
       {
         id: "suggestion-3-1",
@@ -72,6 +75,7 @@ export const events: Event[] = [
     title: "Respond to emails",
     time: "12 PM",
     hourIndex: 12,
+    category: "errand",
     suggestions: [
       {
         id: "suggestion-4-1",
@@ -86,6 +90,7 @@ export const events: Event[] = [
     title: "Call with Team",
     time: "1 PM",
     hourIndex: 13,
+    category: "meeting",
     suggestions: [
       {
         id: "suggestion-5-1",
@@ -100,6 +105,7 @@ export const events: Event[] = [
     title: "Lunch",
     time: "2 PM",
     hourIndex: 14,
+    category: "routine",
     suggestions: [
       {
         id: "suggestion-6-1",
@@ -114,6 +120,7 @@ export const events: Event[] = [
     title: "Book Flight for US Trip",
     time: "4 PM",
     hourIndex: 16,
+    category: "travel",
     suggestions: [
       {
         id: "suggestion-7-1",
@@ -128,6 +135,7 @@ export const events: Event[] = [
     title: "Buy Book for Friend's Birthday",
     time: "5 PM",
     hourIndex: 17,
+    category: "errand",
     suggestions: [
       {
         id: "suggestion-8-1",
@@ -142,6 +150,7 @@ export const events: Event[] = [
     title: "1 hour of code",
     time: "6 PM",
     hourIndex: 18,
+    category: "goal",
     suggestions: [
       {
         id: "suggestion-9-1",
@@ -156,6 +165,7 @@ export const events: Event[] = [
     title: "1 hour of Chinese",
     time: "7 PM",
     hourIndex: 19,
+    category: "goal",
     suggestions: [
       {
         id: "suggestion-10-1",
@@ -170,6 +180,7 @@ export const events: Event[] = [
     title: "Dinner",
     time: "8 PM",
     hourIndex: 20,
+    category: "routine",
     suggestions: [
       {
         id: "suggestion-11-1",
@@ -184,6 +195,7 @@ export const events: Event[] = [
     title: "Get Ready for bed",
     time: "10 PM",
     hourIndex: 22,
+    category: "routine",
     suggestions: [
       {
         id: "suggestion-12-1",
