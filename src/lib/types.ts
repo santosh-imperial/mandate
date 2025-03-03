@@ -101,3 +101,55 @@ export interface ConfiguredMandate extends MandateTemplate {
   daysOfWeek?: number[];
   fields: MandateField[];
 }
+
+export interface AIModel {
+  id: string;
+  name: string;
+  description: string;
+  capabilities: string[];
+}
+
+export interface CustomMandateConfig {
+  id: string;
+  name: string;
+  description: string;
+  userCase: string;
+  intelligence: {
+    model: string;
+  };
+  conditioning: {
+    instructions: string;
+    knowledgeBase: {
+      enabled: boolean;
+      documents: string[];
+    };
+    finetuning: {
+      enabled: boolean;
+      examples: Array<{
+        input: string;
+        output: string;
+      }>;
+    };
+  };
+  access: {
+    tools: {
+      enabled: boolean;
+      connectedApis: string[];
+    };
+    computerAccess: {
+      enabled: boolean;
+      permissions: string[];
+    };
+  };
+  memory: {
+    shortTerm: {
+      conversationCount: number;
+    };
+    longTermWrite: boolean;
+    longTermRead: boolean;
+  };
+  preferences: string[];
+  type: MandateType;
+  icon: string;
+  isActive: boolean;
+}
