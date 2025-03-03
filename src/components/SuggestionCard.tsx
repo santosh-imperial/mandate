@@ -1,5 +1,5 @@
 
-import { Suggestion } from "@/lib/types";
+import { Suggestion, NewsItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { AreaChart, ExternalLink } from "lucide-react";
 
@@ -56,9 +56,9 @@ export const SuggestionCard = ({ suggestion, index }: SuggestionCardProps) => {
             </div>
           )}
           
-          {suggestion.content && (
+          {suggestion.content && suggestion.content.length > 0 && (
             <div className="mt-3 space-y-2">
-              {Array.isArray(suggestion.content) && suggestion.content.map((item: any, idx: number) => (
+              {suggestion.content.map((item: NewsItem, idx: number) => (
                 <div key={idx} className="border-t pt-2">
                   <div className="text-xs font-medium mb-1">{item.title}</div>
                   <div className="flex items-center space-x-1 text-xs text-muted-foreground">

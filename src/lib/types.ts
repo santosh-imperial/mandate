@@ -11,6 +11,13 @@ export interface Event {
 
 export type ContentType = "text" | "image" | "graph" | "link" | "news";
 
+export interface NewsItem {
+  title: string;
+  source: string;
+  attribution?: string;
+  time: string;
+}
+
 export interface Suggestion {
   id: string;
   type: ContentType;
@@ -21,5 +28,5 @@ export interface Suggestion {
   chartData?: any;
   source?: string;
   date?: string;
-  content?: ReactNode;
+  content?: NewsItem[];
 }
