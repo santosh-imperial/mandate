@@ -9,9 +9,9 @@ const Index = () => {
         <div className="max-w-[1200px] mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="font-semibold text-sm text-primary-foreground">FP</span>
+              <span className="font-semibold text-sm text-primary-foreground">M</span>
             </div>
-            <h1 className="text-xl font-medium">FlowPlanner</h1>
+            <h1 className="text-xl font-medium">Mandate</h1>
           </div>
           
           <nav className="hidden md:flex items-center space-x-6">
@@ -37,7 +37,7 @@ const Index = () => {
       <footer className="border-t border-border py-4 px-6">
         <div className="max-w-[1200px] mx-auto">
           <div className="text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} FlowPlanner. All rights reserved.
+            &copy; {new Date().getFullYear()} Mandate. All rights reserved.
           </div>
         </div>
       </footer>
