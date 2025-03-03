@@ -77,7 +77,7 @@ export const Calendar = () => {
         </div>
       </div>
 
-      <div className="border border-border rounded-xl overflow-hidden shadow-sm bg-background relative">
+      <div className="border border-border rounded-xl overflow-hidden shadow-sm bg-background">
         <div className="calendar-container relative">
           {hours.map(hour => (
             <TimeSlot 
@@ -89,13 +89,13 @@ export const Calendar = () => {
           
           {/* Fixed time indicator at 8:15 AM */}
           <div 
-            className="absolute left-0 right-0 border-t-2 border-red-500 z-10 pointer-events-none"
+            className="absolute left-0 right-0 border-t-2 border-purple-500 z-10 pointer-events-none"
             style={{
-              top: `calc(${timePosition.hourIndex * TIME_SLOT_HEIGHT}px + ${timePosition.minutePercentage}% * ${TIME_SLOT_HEIGHT}px / 100)`,
+              top: `${(timePosition.hourIndex * TIME_SLOT_HEIGHT) + (timePosition.minutePercentage * TIME_SLOT_HEIGHT / 100)}px`,
             }}
           >
-            <div className="absolute -left-1 -top-2 w-4 h-4 rounded-full bg-red-500" />
-            <span className="absolute -left-16 -top-3 text-xs font-medium text-red-500">8:15 AM</span>
+            <div className="absolute -left-1 -top-2 w-4 h-4 rounded-full bg-purple-500" />
+            <span className="absolute -left-16 -top-3 text-xs font-medium text-purple-500">8:15 AM</span>
           </div>
         </div>
       </div>
