@@ -1,5 +1,6 @@
 
 import { Calendar } from "@/components/Calendar";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Index = () => {
   return (
@@ -21,6 +22,7 @@ const Index = () => {
           </nav>
           
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <button className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground">
               <span className="text-sm font-medium">JS</span>
             </button>

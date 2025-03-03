@@ -51,7 +51,7 @@ export const FloatingSearchBar = () => {
     <div
       ref={searchBarRef}
       className={cn(
-        "fixed z-50 flex items-center gap-2 px-4 py-3 rounded-xl backdrop-blur-md bg-white/70 dark:bg-gray-900/70 shadow-lg border border-gray-200/50 dark:border-gray-700/50 transition-all",
+        "fixed z-50 flex items-center gap-2 px-4 py-3 rounded-xl glass shadow-lg transition-all",
         isDragging ? "cursor-grabbing" : "cursor-grab hover:shadow-xl"
       )}
       style={{
@@ -61,11 +61,11 @@ export const FloatingSearchBar = () => {
       }}
       onMouseDown={handleMouseDown}
     >
-      <Search className="w-4 h-4 text-gray-500" />
+      <Search className="w-4 h-4 text-muted-foreground" />
       <input
         type="text"
         placeholder="Search for anything..."
-        className="bg-transparent border-none outline-none flex-1 text-sm placeholder-gray-500 dark:placeholder-gray-400 text-gray-700 dark:text-gray-300"
+        className="bg-transparent border-none outline-none flex-1 text-sm placeholder-muted-foreground text-foreground"
       />
     </div>
   );
