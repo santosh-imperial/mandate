@@ -30,3 +30,14 @@ export interface Suggestion {
   date?: string;
   content?: NewsItem[];
 }
+
+export interface Task {
+  id: string;
+  title: string;
+  description?: string;
+  completed: boolean;
+  priority: 'low' | 'medium' | 'high';
+  dueDate?: Date;
+  tags?: string[];
+  createdAt: Date;
+}
