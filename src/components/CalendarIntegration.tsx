@@ -10,7 +10,7 @@ import {
   DialogFooter
 } from "@/components/ui/dialog";
 import { Calendar as CalendarIcon, Check, RefreshCw, X } from "lucide-react";
-import { CalendarIntegration, Task } from "@/lib/types";
+import type { CalendarIntegration as CalendarIntegrationType, Task } from "@/lib/types";
 import { toast } from "sonner";
 
 interface CalendarIntegrationProps {
@@ -18,7 +18,7 @@ interface CalendarIntegrationProps {
 }
 
 export function CalendarIntegration({ onImportTasks }: CalendarIntegrationProps) {
-  const [integrations, setIntegrations] = useState<CalendarIntegration[]>([
+  const [integrations, setIntegrations] = useState<CalendarIntegrationType[]>([
     { id: "google", type: "google", connected: false },
     { id: "outlook", type: "outlook", connected: false },
     { id: "apple", type: "apple", connected: false }
