@@ -1,11 +1,13 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 
 export const FloatingSearchBar = () => {
-  const [position, setPosition] = useState({ x: 50, y: window.innerHeight - 100 });
+  const [position, setPosition] = useState({ 
+    x: window.innerWidth / 2 - 200, // Center horizontally by default
+    y: window.innerHeight / 2 // Center vertically by default
+  });
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [inputValue, setInputValue] = useState("");
@@ -50,6 +52,19 @@ export const FloatingSearchBar = () => {
     };
   }, [isDragging, dragOffset]);
 
+  // Update position on window resize to keep it centered
+  useEffect(() => {
+    const handleResize = () => {
+      setPosition({
+        x: window.innerWidth / 2 - 200,
+        y: window.innerHeight / 2
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Handle key press for search input
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && inputValue.trim()) {
@@ -67,14 +82,14 @@ export const FloatingSearchBar = () => {
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
-        width: "280px",
+        width: "400px", // Increased width from 280px to 400px
       }}
       onMouseDown={handleMouseDown}
     >
       <Search className="w-4 h-4 text-muted-foreground" />
       <input
         type="text"
-        placeholder="Search for anything..."
+        placeholder="Would you like to set up a new mandate?"
         className="bg-transparent border-none outline-none flex-1 text-sm placeholder-muted-foreground text-foreground"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
