@@ -1,5 +1,5 @@
 
-import { MandateTemplate } from './types';
+import { MandateTemplate, ConfiguredMandate } from './types';
 
 export const mandateTemplates: MandateTemplate[] = [
   {

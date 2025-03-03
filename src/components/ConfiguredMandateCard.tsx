@@ -39,10 +39,10 @@ export const ConfiguredMandateCard = ({
     }
   }, [mandate.lastRun]);
 
-  // Dynamically get the icon from lucide-react
-  const IconComponent = (LucideIcons as Record<string, React.ComponentType<{ className?: string }>>)[
-    mandate.icon.charAt(0).toUpperCase() + mandate.icon.slice(1)
-  ] || LucideIcons.Bot;
+  // Use a safer approach to dynamically get the icon
+  const iconName = mandate.icon.charAt(0).toUpperCase() + mandate.icon.slice(1);
+  // Cast LucideIcons to any to avoid TypeScript errors with dynamic access
+  const IconComponent = (LucideIcons as any)[iconName] || LucideIcons.Bot;
 
   const handleSaveEdit = (updatedMandate: ConfiguredMandate) => {
     onEdit(updatedMandate);

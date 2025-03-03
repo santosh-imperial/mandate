@@ -10,10 +10,10 @@ interface MandateTemplateCardProps {
 }
 
 export const MandateTemplateCard = ({ template, onClick }: MandateTemplateCardProps) => {
-  // Dynamically get the icon from lucide-react
-  const IconComponent = (LucideIcons as Record<string, React.ComponentType<{ className?: string }>>)[
-    template.icon.charAt(0).toUpperCase() + template.icon.slice(1)
-  ] || LucideIcons.Bot;
+  // Use a safer approach to dynamically get the icon
+  const iconName = template.icon.charAt(0).toUpperCase() + template.icon.slice(1);
+  // Cast LucideIcons to any to avoid TypeScript errors with dynamic access
+  const IconComponent = (LucideIcons as any)[iconName] || LucideIcons.Bot;
 
   return (
     <div className="border rounded-lg p-6 hover:border-primary transition-colors">
