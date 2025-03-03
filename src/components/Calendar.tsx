@@ -5,6 +5,7 @@ import { TimeSlot } from "./TimeSlot";
 import { events } from "@/lib/data";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Event } from "@/lib/types";
+import { FloatingSearchBar } from "./FloatingSearchBar";
 
 export const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -72,13 +73,10 @@ export const Calendar = () => {
             />
           ))}
         </div>
-        
-        <div className="border-t border-border py-4 px-8">
-          <div className="flex items-center text-muted-foreground">
-            <span>Any other mandate to setup?</span>
-          </div>
-        </div>
       </div>
+      
+      {/* Floating Search Bar */}
+      <FloatingSearchBar />
     </div>
   );
 };
