@@ -11,7 +11,7 @@ interface SuggestionCarouselProps {
 
 export const SuggestionCarousel = ({ suggestions }: SuggestionCarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [visibleSuggestions, setVisibleSuggestions] = useState<Suggestion[]>([suggestions[0]]);
+  const [visibleSuggestions, setVisibleSuggestions] = useState<Suggestion[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleAddSuggestion = () => {
@@ -33,7 +33,7 @@ export const SuggestionCarousel = ({ suggestions }: SuggestionCarouselProps) => 
   };
 
   useEffect(() => {
-    // Ensure we always start with at least the first suggestion
+    // Ensure we always start with at least the first suggestion if available
     if (suggestions.length > 0 && visibleSuggestions.length === 0) {
       setVisibleSuggestions([suggestions[0]]);
     }
