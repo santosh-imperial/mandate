@@ -1,21 +1,21 @@
-
 import { useState } from "react";
 import { tasks as initialTasks } from "@/lib/tasks-data";
 import { Task } from "@/lib/types";
 import { TaskItem } from "@/components/TaskItem";
+import { TaskVoiceInput } from "@/components/TaskVoiceInput";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
-import { Check, List, Plus } from "lucide-react";
+import { Check, List, Mic, Plus } from "lucide-react";
 import { toast } from "sonner";
-import { format } from "date-fns";
 
 export default function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [filterTag, setFilterTag] = useState<string | null>(null);
   const [editTask, setEditTask] = useState<Task | null>(null);
+  const [showVoiceInput, setShowVoiceInput] = useState(false);
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
@@ -87,6 +87,28 @@ export default function TasksPage() {
     toast.success(`New task added: ${newTask.title}`);
   };
 
+  // Handle adding task via voice or chat
+  const handleAddTaskViaVoice = (title: string, description?: string) => {
+    if (!title.trim()) {
+      toast.error("Task title cannot be empty");
+      return;
+    }
+
+    const newTaskObj: Task = {
+      id: `task-${Date.now()}`,
+      title: title,
+      description: description || undefined,
+      completed: false,
+      priority: "medium",
+      createdAt: new Date(),
+      tags: []
+    };
+
+    setTasks([newTaskObj, ...tasks]);
+    setShowVoiceInput(false);
+    toast.success(`New task added: ${title}`);
+  };
+
   // Handle editing a task
   const handleEditTask = (task: Task) => {
     setEditTask(task);
@@ -136,90 +158,109 @@ export default function TasksPage() {
           </p>
         </div>
 
-        {/* Add Task Button */}
-        <Dialog open={isAddDialogOpen} onOpenChange={(open) => {
-          setIsAddDialogOpen(open);
-          if (!open) handleDialogClose();
-        }}>
-          <DialogTrigger asChild>
-            <Button className="gap-2">
-              <Plus className="h-4 w-4" />
-              Add Task
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>
-                {editTask ? "Edit Task" : "Add New Task"}
-              </DialogTitle>
-            </DialogHeader>
-            
-            <div className="space-y-4 py-2">
-              <div className="space-y-2">
-                <label htmlFor="title" className="text-sm font-medium">
-                  Title
-                </label>
-                <Input 
-                  id="title" 
-                  value={editTask ? editTask.title : newTask.title}
-                  onChange={(e) => editTask 
-                    ? setEditTask({...editTask, title: e.target.value}) 
-                    : setNewTask({...newTask, title: e.target.value})
-                  }
-                  placeholder="Task title"
-                />
-              </div>
+        {/* Add Task Buttons */}
+        <div className="flex gap-2">
+          <Button 
+            variant="outline" 
+            className="gap-2"
+            onClick={() => setShowVoiceInput(true)}
+          >
+            <Mic className="h-4 w-4" />
+            Voice/Chat
+          </Button>
+          
+          <Dialog open={isAddDialogOpen} onOpenChange={(open) => {
+            setIsAddDialogOpen(open);
+            if (!open) handleDialogClose();
+          }}>
+            <DialogTrigger asChild>
+              <Button className="gap-2">
+                <Plus className="h-4 w-4" />
+                Add Task
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>
+                  {editTask ? "Edit Task" : "Add New Task"}
+                </DialogTitle>
+              </DialogHeader>
               
-              <div className="space-y-2">
-                <label htmlFor="description" className="text-sm font-medium">
-                  Description (optional)
-                </label>
-                <Input 
-                  id="description" 
-                  value={editTask ? editTask.description || "" : newTask.description}
-                  onChange={(e) => editTask 
-                    ? setEditTask({...editTask, description: e.target.value}) 
-                    : setNewTask({...newTask, description: e.target.value})
-                  }
-                  placeholder="Task description"
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Priority</label>
-                <div className="flex gap-2">
-                  {["low", "medium", "high"].map((priority) => (
-                    <Button
-                      key={priority}
-                      type="button"
-                      variant={
-                        (editTask ? editTask.priority : newTask.priority) === priority 
-                          ? "default" 
-                          : "outline"
-                      }
-                      onClick={() => editTask 
-                        ? setEditTask({...editTask, priority: priority as "low" | "medium" | "high"}) 
-                        : setNewTask({...newTask, priority: priority as "low" | "medium" | "high"})
-                      }
-                    >
-                      {priority.charAt(0).toUpperCase() + priority.slice(1)}
-                    </Button>
-                  ))}
+              <div className="space-y-4 py-2">
+                <div className="space-y-2">
+                  <label htmlFor="title" className="text-sm font-medium">
+                    Title
+                  </label>
+                  <Input 
+                    id="title" 
+                    value={editTask ? editTask.title : newTask.title}
+                    onChange={(e) => editTask 
+                      ? setEditTask({...editTask, title: e.target.value}) 
+                      : setNewTask({...newTask, title: e.target.value})
+                    }
+                    placeholder="Task title"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="description" className="text-sm font-medium">
+                    Description (optional)
+                  </label>
+                  <Input 
+                    id="description" 
+                    value={editTask ? editTask.description || "" : newTask.description}
+                    onChange={(e) => editTask 
+                      ? setEditTask({...editTask, description: e.target.value}) 
+                      : setNewTask({...newTask, description: e.target.value})
+                    }
+                    placeholder="Task description"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Priority</label>
+                  <div className="flex gap-2">
+                    {["low", "medium", "high"].map((priority) => (
+                      <Button
+                        key={priority}
+                        type="button"
+                        variant={
+                          (editTask ? editTask.priority : newTask.priority) === priority 
+                            ? "default" 
+                            : "outline"
+                        }
+                        onClick={() => editTask 
+                          ? setEditTask({...editTask, priority: priority as "low" | "medium" | "high"}) 
+                          : setNewTask({...newTask, priority: priority as "low" | "medium" | "high"})
+                        }
+                      >
+                        {priority.charAt(0).toUpperCase() + priority.slice(1)}
+                      </Button>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-            
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
-                Cancel
-              </Button>
-              <Button onClick={editTask ? handleSaveEdit : handleAddTask}>
-                {editTask ? "Save Changes" : "Add Task"}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+              
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={editTask ? handleSaveEdit : handleAddTask}>
+                  {editTask ? "Save Changes" : "Add Task"}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
+      
+      {/* Voice/Chat Task Input Modal */}
+      {showVoiceInput && (
+        <TaskVoiceInput 
+          onAddTask={handleAddTaskViaVoice}
+          onClose={() => setShowVoiceInput(false)}
+        />
+      )}
       
       {/* Filter by tags */}
       {allTags.length > 0 && (
