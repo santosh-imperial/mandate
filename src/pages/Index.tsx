@@ -1,6 +1,8 @@
 
 import { Calendar } from "@/components/Calendar";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Link } from "react-router-dom";
+import { FloatingSearchBar } from "@/components/FloatingSearchBar";
 
 const Index = () => {
   return (
@@ -15,11 +17,11 @@ const Index = () => {
           </div>
           
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="#" className="text-sm font-medium transition-colors hover:text-muted-foreground">Calendar</a>
-            <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Tasks</a>
+            <Link to="/" className="text-sm font-medium transition-colors hover:text-muted-foreground">Calendar</Link>
+            <Link to="/tasks" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Tasks</Link>
             <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Projects</a>
             <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Analytics</a>
-            <a href="/about" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">About</a>
+            <Link to="/about" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">About</Link>
           </nav>
           
           <div className="flex items-center gap-2">
@@ -42,6 +44,8 @@ const Index = () => {
           </div>
         </div>
       </footer>
+      
+      <FloatingSearchBar />
     </div>
   );
 };
