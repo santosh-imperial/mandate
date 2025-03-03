@@ -7,7 +7,18 @@ export interface Event {
   time: string;
   hourIndex: number; // 0-23 for hours of the day
   suggestions: Suggestion[];
+  category?: EventCategory; // Adding category field for color coding
 }
+
+export type EventCategory = 
+  | 'meeting'
+  | 'travel'
+  | 'task'
+  | 'reminder'
+  | 'social'
+  | 'health'
+  | 'learning'
+  | 'other';
 
 export type ContentType = "text" | "image" | "graph" | "link" | "news";
 
