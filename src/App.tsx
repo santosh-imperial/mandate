@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import ChatScreen from "./pages/ChatScreen";
 import TasksPage from "./pages/TasksPage";
 import MandateTemplatePage from "./pages/MandateTemplatePage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ function App() {
               <Route path="/chat" element={<ChatScreen />} />
               <Route path="/tasks" element={<TasksPage />} />
               <Route path="/mandates" element={<MandateTemplatePage />} />
+              <Route path="/analytics" element={<AnalyticsPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

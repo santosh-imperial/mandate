@@ -35,8 +35,10 @@ export const Navbar = () => {
         Mandate Templates
       </Link>
       <Link 
-        to="#" 
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+        to="/analytics" 
+        className={`text-sm font-medium transition-colors ${
+          isActiveRoute('/analytics') ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+        }`}
       >
         Analytics
       </Link>
