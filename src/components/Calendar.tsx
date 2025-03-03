@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { format, addDays, subDays, isSameDay } from "date-fns";
 import { TimeSlot } from "./TimeSlot";
 import { events } from "@/lib/data";
@@ -8,17 +8,7 @@ import { Event } from "@/lib/types";
 
 export const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [currentTime, setCurrentTime] = useState(new Date());
   const hours = Array.from({ length: 15 }, (_, i) => i + 8); // 8 AM to 10 PM
-
-  // Update current time every minute
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 60000); // 60000ms = 1 minute
-    
-    return () => clearInterval(intervalId);
-  }, []);
 
   const getEventsForHour = (hour: number): Event | undefined => {
     return events.find(event => event.hourIndex === hour);
@@ -38,25 +28,17 @@ export const Calendar = () => {
 
   const isTodaySelected = isSameDay(selectedDate, new Date());
   
-  // Calculate current time position
-  const getCurrentTimePosition = () => {
-    if (!isTodaySelected) return null;
-    
-    const now = currentTime;
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    
-    // If current time is outside our calendar range (before 8AM or after 10PM)
-    if (hours < 8 || hours >= 23) return null;
-    
-    // Calculate position as percentage within the time slot
-    const hourIndex = hours - 8; // Adjust to our 8AM start time
-    const minutePercentage = (minutes / 60) * 100;
+  // Calculate static time position for 8:15 AM
+  const getTimePosition = () => {
+    // 8:15 AM corresponds to hour index 0 (8AM is our first hour)
+    // and 15 minutes = 25% of the hour
+    const hourIndex = 0; // 8AM (first hour in our display)
+    const minutePercentage = 25; // 15 minutes = 25% of an hour
     
     return { hourIndex, minutePercentage };
   };
   
-  const timePosition = getCurrentTimePosition();
+  const timePosition = getTimePosition();
 
   return (
     <div className="w-full max-w-[1200px] mx-auto">
@@ -102,17 +84,16 @@ export const Calendar = () => {
             />
           ))}
           
-          {/* Current time indicator */}
-          {timePosition && (
-            <div 
-              className="absolute left-0 right-0 border-t-2 border-red-500 z-10 pointer-events-none"
-              style={{
-                top: `calc(${timePosition.hourIndex * 70}px + ${timePosition.minutePercentage}% * 70px / 100)`,
-              }}
-            >
-              <div className="absolute -left-1 -top-2 w-4 h-4 rounded-full bg-red-500" />
-            </div>
-          )}
+          {/* Fixed time indicator at 8:15 AM */}
+          <div 
+            className="absolute left-0 right-0 border-t-2 border-red-500 z-10 pointer-events-none"
+            style={{
+              top: `calc(${timePosition.hourIndex * 70}px + ${timePosition.minutePercentage}% * 70px / 100)`,
+            }}
+          >
+            <div className="absolute -left-1 -top-2 w-4 h-4 rounded-full bg-red-500" />
+            <span className="absolute -left-16 -top-3 text-xs font-medium text-red-500">8:15 AM</span>
+          </div>
         </div>
       </div>
     </div>
