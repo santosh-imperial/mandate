@@ -58,3 +58,46 @@ export interface CalendarIntegration {
   connected: boolean;
   lastSynced?: Date;
 }
+
+export type MandateType = 
+  | 'travel'
+  | 'meeting'
+  | 'task'
+  | 'reminder'
+  | 'research'
+  | 'weather'
+  | 'news'
+  | 'finance'
+  | 'health'
+  | 'custom';
+
+export interface MandateTemplate {
+  id: string;
+  type: MandateType;
+  name: string;
+  description: string;
+  icon: string;
+  fields: MandateField[];
+  isActive?: boolean;
+  lastRun?: Date;
+}
+
+export interface MandateField {
+  id: string;
+  name: string;
+  type: 'text' | 'select' | 'time' | 'date' | 'location' | 'toggle';
+  label: string;
+  placeholder?: string;
+  required: boolean;
+  options?: string[];
+  value?: string | boolean;
+}
+
+export interface ConfiguredMandate extends MandateTemplate {
+  isActive: boolean;
+  lastRun?: Date;
+  frequency: 'daily' | 'weekly' | 'monthly' | 'onDemand';
+  timeOfDay?: string;
+  daysOfWeek?: number[];
+  fields: MandateField[];
+}
