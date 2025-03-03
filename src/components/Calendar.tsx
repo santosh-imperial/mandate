@@ -28,6 +28,9 @@ export const Calendar = () => {
 
   const isTodaySelected = isSameDay(selectedDate, new Date());
   
+  // Fixed height for each time slot in pixels
+  const TIME_SLOT_HEIGHT = 70;
+  
   // Calculate static time position for 8:15 AM
   const getTimePosition = () => {
     // 8:15 AM corresponds to hour index 0 (8AM is our first hour)
@@ -75,7 +78,7 @@ export const Calendar = () => {
       </div>
 
       <div className="border border-border rounded-xl overflow-hidden shadow-sm bg-background relative">
-        <div className="calendar-container">
+        <div className="calendar-container relative">
           {hours.map(hour => (
             <TimeSlot 
               key={hour} 
@@ -88,7 +91,7 @@ export const Calendar = () => {
           <div 
             className="absolute left-0 right-0 border-t-2 border-red-500 z-10 pointer-events-none"
             style={{
-              top: `calc(${timePosition.hourIndex * 70}px + ${timePosition.minutePercentage}% * 70px / 100)`,
+              top: `calc(${timePosition.hourIndex * TIME_SLOT_HEIGHT}px + ${timePosition.minutePercentage}% * ${TIME_SLOT_HEIGHT}px / 100)`,
             }}
           >
             <div className="absolute -left-1 -top-2 w-4 h-4 rounded-full bg-red-500" />
