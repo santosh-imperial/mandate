@@ -64,7 +64,7 @@ export const SuggestionCarousel = ({ suggestions }: SuggestionCarouselProps) => 
           <div className="flex-none flex items-center">
             <button 
               onClick={handleAddSuggestion}
-              className="w-10 h-10 rounded-full bg-white text-primary shadow-sm flex items-center justify-center hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 animate-fade-in"
+              className="w-10 h-10 rounded-full bg-primary text-primary-foreground shadow-sm flex items-center justify-center hover:bg-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 animate-fade-in"
               aria-label="Show more suggestions"
             >
               <Plus className="w-5 h-5" />
