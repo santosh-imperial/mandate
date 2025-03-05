@@ -19,6 +19,7 @@ export default function TasksPage() {
   const [filterTag, setFilterTag] = useState<string | null>(null);
   const [editTask, setEditTask] = useState<Task | null>(null);
   const [showVoiceInput, setShowVoiceInput] = useState(false);
+  const [parentTaskId, setParentTaskId] = useState<string | null>(null);
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
@@ -75,6 +76,13 @@ export default function TasksPage() {
       tags: []
     };
 
+    if (parentTaskId) {
+      const parentTask = tasks.find(task => task.id === parentTaskId);
+      if (parentTask) {
+        newTaskObj.title = `${newTaskObj.title} (sub-task of ${parentTask.title})`;
+      }
+    }
+
     setTasks([newTaskObj, ...tasks]);
     setNewTask({
       title: "",
@@ -82,7 +90,13 @@ export default function TasksPage() {
       priority: "medium",
     });
     setIsAddDialogOpen(false);
+    setParentTaskId(null);
     toast.success(`New task added: ${newTask.title}`);
+  };
+
+  const handleAddSubtask = (parentId: string) => {
+    setParentTaskId(parentId);
+    setIsAddDialogOpen(true);
   };
 
   const handleAddTaskViaVoice = (title: string, description?: string) => {
@@ -125,6 +139,7 @@ export default function TasksPage() {
 
   const handleDialogClose = () => {
     setEditTask(null);
+    setParentTaskId(null);
     setNewTask({
       title: "",
       description: "",
@@ -185,7 +200,7 @@ export default function TasksPage() {
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>
-                      {editTask ? "Edit Task" : "Add New Task"}
+                      {editTask ? "Edit Task" : parentTaskId ? "Add Subtask" : "Add New Task"}
                     </DialogTitle>
                   </DialogHeader>
                   
@@ -201,7 +216,7 @@ export default function TasksPage() {
                           ? setEditTask({...editTask, title: e.target.value}) 
                           : setNewTask({...newTask, title: e.target.value})
                         }
-                        placeholder="Task title"
+                        placeholder={parentTaskId ? "Subtask title" : "Task title"}
                       />
                     </div>
                     
@@ -249,7 +264,7 @@ export default function TasksPage() {
                       Cancel
                     </Button>
                     <Button onClick={editTask ? handleSaveEdit : handleAddTask}>
-                      {editTask ? "Save Changes" : "Add Task"}
+                      {editTask ? "Save Changes" : parentTaskId ? "Add Subtask" : "Add Task"}
                     </Button>
                   </DialogFooter>
                 </DialogContent>
@@ -328,6 +343,7 @@ export default function TasksPage() {
                     onComplete={handleToggleComplete}
                     onDelete={handleDeleteTask}
                     onEdit={handleEditTask}
+                    onAddSubtask={handleAddSubtask}
                   />
                 ))
               )}
@@ -351,6 +367,7 @@ export default function TasksPage() {
                     onComplete={handleToggleComplete}
                     onDelete={handleDeleteTask}
                     onEdit={handleEditTask}
+                    onAddSubtask={handleAddSubtask}
                   />
                 ))
               )}

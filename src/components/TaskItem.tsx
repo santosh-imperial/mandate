@@ -3,7 +3,7 @@ import { Task } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
-import { Check, Trash, Edit, Calendar } from "lucide-react";
+import { Check, Trash, Edit, Calendar, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface TaskItemProps {
@@ -11,9 +11,16 @@ interface TaskItemProps {
   onComplete: (id: string) => void;
   onDelete: (id: string) => void;
   onEdit: (task: Task) => void;
+  onAddSubtask?: (parentId: string) => void;
 }
 
-export const TaskItem = ({ task, onComplete, onDelete, onEdit }: TaskItemProps) => {
+export const TaskItem = ({ 
+  task, 
+  onComplete, 
+  onDelete, 
+  onEdit, 
+  onAddSubtask = () => {} 
+}: TaskItemProps) => {
   const priorityClasses = {
     low: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
     medium: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
@@ -72,6 +79,15 @@ export const TaskItem = ({ task, onComplete, onDelete, onEdit }: TaskItemProps) 
         </div>
         
         <div className="flex space-x-2">
+          <Button
+            size="icon"
+            variant="ghost"
+            className="text-primary hover:bg-primary/10"
+            onClick={() => onAddSubtask(task.id)}
+            title="Add subtask"
+          >
+            <Plus className="h-4 w-4" />
+          </Button>
           <Button
             size="icon"
             variant="ghost"
