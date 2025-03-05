@@ -82,7 +82,7 @@ export const TaskItem = ({
           <Button
             size="icon"
             variant="ghost"
-            className="text-primary hover:bg-primary/10"
+            className="text-primary hover:bg-primary/10 dark:text-primary dark:hover:bg-primary/20"
             onClick={() => onAddSubtask(task.id)}
             title="Add subtask"
           >
