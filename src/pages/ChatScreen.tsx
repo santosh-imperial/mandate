@@ -1,7 +1,6 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Menu, Send, Check, Book, Info, MoreHorizontal } from "lucide-react";
+import { ArrowLeft, Menu, Send, Check, Book, Info, MoreHorizontal, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -58,7 +57,7 @@ const ChatScreen = () => {
               id: (Date.now() + 2).toString(),
               content: "For helping you with the investment decisions, I need some more information from you. I would recommend going over them after a week or two of learning but If you prefer to get started now? I can go ahead",
               isUser: false,
-              suggestions: ["What do you think of the plan?"]
+              suggestions: ["Go ahead"]
             };
             
             setMessages(prev => [...prev, secondAiMessage]);
@@ -127,7 +126,7 @@ const ChatScreen = () => {
             id: (Date.now() + 2).toString(),
             content: "For helping you with the investment decisions, I need some more information from you. I would recommend going over them after a week or two of learning but If you prefer to get started now? I can go ahead",
             isUser: false,
-            suggestions: ["What do you think of the plan?"]
+            suggestions: ["Go ahead"]
           };
           
           setMessages(prev => [...prev, secondAiMessage]);
@@ -151,6 +150,26 @@ const ChatScreen = () => {
         
         setMessages(prev => [...prev, newAiMessage]);
       } else if (suggestion === "What do you think of the plan?") {
+        newAiMessage = {
+          id: (Date.now() + 1).toString(),
+          content: "The first choice we need to make is",
+          isUser: false,
+        };
+        
+        setMessages(prev => [...prev, newAiMessage]);
+        
+        // Add the model selection message
+        setTimeout(() => {
+          const modelSelectionMessage: ChatMessage = {
+            id: (Date.now() + 2).toString(),
+            content: "Choose the intelligence your mandate should have",
+            isUser: false,
+            suggestions: ["GPT", "Claude"]
+          };
+          
+          setMessages(prev => [...prev, modelSelectionMessage]);
+        }, 1500);
+      } else if (suggestion === "Go ahead") {
         newAiMessage = {
           id: (Date.now() + 1).toString(),
           content: "The first choice we need to make is",
@@ -226,14 +245,15 @@ const ChatScreen = () => {
                       {suggestion === "Yes, that sounds good" && <Check className="h-4 w-4" />}
                       {suggestion === "Help me only learn" && <Book className="h-4 w-4" />}
                       {suggestion === "Help me only with information" && <Info className="h-4 w-4" />}
+                      {suggestion === "Go ahead" && <ArrowRight className="h-4 w-4" />}
                       {suggestion}
                     </button>
                   ))}
                 </div>
               )}
               
-              {/* "or something else?" text for first message */}
-              {message.id === "1" && message.suggestions && (
+              {/* "or something else?" text for first message and after suggesting "Go ahead" */}
+              {(message.id === "1" || message.content === "For helping you with the investment decisions, I need some more information from you. I would recommend going over them after a week or two of learning but If you prefer to get started now? I can go ahead") && message.suggestions && (
                 <div className="mt-2 text-sm text-muted-foreground flex items-center gap-1">
                   <MoreHorizontal className="h-3 w-3" />
                   <span>or something else?</span>
