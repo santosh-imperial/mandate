@@ -1,40 +1,36 @@
-
 import { Event as EventType } from "@/lib/types";
 import { SuggestionCarousel } from "./SuggestionCarousel";
 import { cn } from "@/lib/utils";
-import { ExpandableCard } from "./ExpandableCard";
 
 interface EventProps {
   event: EventType;
 }
 
-export const Event = ({ event }: EventProps) => {
-  // Convert event category to ExpandableCard type
-  const cardType = event.category === 'meeting' || event.category === 'travel' 
-    ? 'order' 
-    : 'recipe';
+// Color mapping for different event categories
+const categoryColors: Record<string, string> = {
+  meeting: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
+  travel: "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300",
+  routine: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300",
+  focus: "bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-300",
+  other: "bg-[hsl(var(--event-background))] text-[hsl(var(--event-foreground))]"
+};
 
-  // Prepare details based on event type
-  const details = {
-    price: event.category === 'meeting' || event.category === 'travel' ? "$15.99" : undefined,
-    vendor: event.category === 'meeting' ? "Meeting Room Services" : 
-            event.category === 'travel' ? "Travel Services" : undefined,
-    ingredients: event.category === 'routine' || event.category === 'focus' ? 
-      ["Focus", "Preparation", "Execution", "Review"] : undefined,
-    instructions: event.category === 'routine' || event.category === 'focus' ? 
-      "Follow the process steps in order and take notes during each phase." : undefined
-  };
+export const Event = ({ event }: EventProps) => {
+  // Get color based on category, default to "other" if no category is specified
+  const categoryColor = event.category ? categoryColors[event.category] : categoryColors.other;
 
   return (
-    <div className="group flex flex-col gap-4 pt-1 w-full min-h-[70px]">
-      <ExpandableCard
-        title={event.title}
-        type={cardType}
-        description={`Scheduled at ${event.time}`}
-        details={details}
-      />
+    <div className="group flex gap-4 pt-1 w-full min-h-[70px]">
+      <div 
+        className={cn(
+          "w-full max-w-[250px] rounded-lg p-3 flex items-center",
+          categoryColor
+        )}
+      >
+        <h3 className="font-medium">{event.title}</h3>
+      </div>
       
-      <div className="flex-grow mt-2">
+      <div className="flex-grow">
         <SuggestionCarousel suggestions={event.suggestions} />
       </div>
     </div>

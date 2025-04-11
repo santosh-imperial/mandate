@@ -1,6 +1,7 @@
 
 import { Calendar } from "@/components/Calendar";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Link } from "react-router-dom";
 import { FloatingSearchBar } from "@/components/FloatingSearchBar";
 import { Navbar } from "@/components/Navbar";
 
