@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, Utensils, Coffee, SaladBowl } from "lucide-react";
+import { ChevronDown, ChevronUp, Utensils, Coffee, Salad } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface ExpandableCardProps {
@@ -36,7 +36,7 @@ export const ExpandableCard = ({
       case 'order':
         return <Coffee className="h-5 w-5" />;
       case 'recipe':
-        return <SaladBowl className="h-5 w-5" />;
+        return <Salad className="h-5 w-5" />;
       default:
         return <Utensils className="h-5 w-5" />;
     }
