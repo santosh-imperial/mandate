@@ -1,3 +1,4 @@
+
 import { Event as EventType } from "@/lib/types";
 import { SuggestionCarousel } from "./SuggestionCarousel";
 import { cn } from "@/lib/utils";
