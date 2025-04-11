@@ -12,7 +12,6 @@ import ChatScreen from "./pages/ChatScreen";
 import TasksPage from "./pages/TasksPage";
 import MandateTemplatePage from "./pages/MandateTemplatePage";
 import AnalyticsPage from "./pages/AnalyticsPage";
-import FoodCardsDemo from "./pages/FoodCardsDemo";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +28,6 @@ function App() {
               <Route path="/tasks" element={<TasksPage />} />
               <Route path="/mandates" element={<MandateTemplatePage />} />
               <Route path="/analytics" element={<AnalyticsPage />} />
-              <Route path="/food-cards" element={<FoodCardsDemo />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

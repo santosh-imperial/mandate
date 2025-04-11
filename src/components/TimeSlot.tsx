@@ -15,7 +15,7 @@ export const TimeSlot = ({ hour, event }: TimeSlotProps) => {
   };
 
   return (
-    <div className="time-slot group flex w-full min-h-[70px] border-b border-border">
+    <div className="time-slot group flex w-full min-h-[100px] border-b border-border">
       <div className="w-[60px] flex-shrink-0 pr-2 pt-2">
         <span className="text-sm text-muted-foreground">{formatHour(hour)}</span>
       </div>

@@ -1,7 +1,6 @@
 
 import { Calendar } from "@/components/Calendar";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Link } from "react-router-dom";
 import { FloatingSearchBar } from "@/components/FloatingSearchBar";
 import { Navbar } from "@/components/Navbar";
 
@@ -29,17 +28,6 @@ const Index = () => {
       </header>
       
       <main className="flex-grow p-6">
-        <div className="max-w-[1200px] mx-auto mb-6">
-          <div className="flex flex-wrap gap-4">
-            <Link 
-              to="/food-cards" 
-              className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-            >
-              View Food Cards Demo
-            </Link>
-            {/* Add more demo links here as needed */}
-          </div>
-        </div>
         <Calendar />
       </main>
       
