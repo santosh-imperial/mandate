@@ -1,9 +1,9 @@
-
 import { Suggestion, NewsItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { AreaChart, ExternalLink, ChevronDown, ChevronUp, ShoppingCart, List, Clock } from "lucide-react";
+import { AreaChart, ExternalLink, ChevronDown, ChevronUp, ShoppingCart, List, Clock, Map, Ticket, FileText, Calendar, Mail } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { Card, CardContent } from "./ui/card";
 
 interface SuggestionCardProps {
   suggestion: Suggestion;
@@ -30,18 +30,67 @@ export const SuggestionCard = ({ suggestion, index }: SuggestionCardProps) => {
     }
   };
 
-  // Determine if it's a food order or recipe suggestion
-  const isFoodOrder = suggestion.title?.toLowerCase().includes("from") || 
-                      suggestion.description?.toLowerCase().includes("order") ||
-                      suggestion.description?.toLowerCase().includes("delivery");
+  // Determine content type based on suggestion properties
+  const getSuggestionType = () => {
+    if (suggestion.type === "news") return "news";
+    
+    // Food related suggestions
+    if (suggestion.title?.toLowerCase().includes("from") || 
+        suggestion.description?.toLowerCase().includes("order") ||
+        suggestion.description?.toLowerCase().includes("delivery")) {
+      return "food-order";
+    }
+    
+    if (suggestion.title?.toLowerCase().includes("recipe") ||
+        suggestion.title?.toLowerCase().includes("smoothie") ||
+        suggestion.title?.toLowerCase().includes("oatmeal") ||
+        suggestion.title?.toLowerCase().includes("homemade")) {
+      return "recipe";
+    }
+    
+    // Travel related suggestions
+    if (suggestion.title?.toLowerCase().includes("route") ||
+        suggestion.title?.toLowerCase().includes("traffic") ||
+        suggestion.description?.toLowerCase().includes("traffic") ||
+        suggestion.description?.toLowerCase().includes("min drive")) {
+      return "route";
+    }
+    
+    // Meeting related suggestions
+    if (suggestion.title?.toLowerCase().includes("meeting") ||
+        suggestion.title?.toLowerCase().includes("presentation") ||
+        suggestion.description?.toLowerCase().includes("meeting") ||
+        suggestion.description?.toLowerCase().includes("agenda")) {
+      return "meeting";
+    }
+    
+    // Event related suggestions
+    if (suggestion.title?.toLowerCase().includes("ticket") ||
+        suggestion.title?.toLowerCase().includes("concert") ||
+        suggestion.description?.toLowerCase().includes("ticket") ||
+        suggestion.description?.toLowerCase().includes("event")) {
+      return "event";
+    }
+    
+    // Document related suggestions
+    if (suggestion.title?.toLowerCase().includes("document") ||
+        suggestion.title?.toLowerCase().includes("file") ||
+        suggestion.description?.toLowerCase().includes("document")) {
+      return "document";
+    }
+    
+    return "general";
+  };
   
   // Expanded content based on suggestion type
   const renderExpandedContent = () => {
-    if (suggestion.type === "news") {
+    const suggestionType = getSuggestionType();
+    
+    if (suggestionType === "news") {
       return null; // News items don't need expanded view beyond what they already show
     }
     
-    if (isFoodOrder) {
+    if (suggestionType === "food-order") {
       // Food order details
       const price = suggestion.title?.includes("pancakes") ? "$12.99" :
                     suggestion.title?.includes("bagel") ? "$7.50" :
@@ -72,7 +121,9 @@ export const SuggestionCard = ({ suggestion, index }: SuggestionCardProps) => {
           </Button>
         </div>
       );
-    } else {
+    } 
+    
+    if (suggestionType === "recipe") {
       // Recipe details
       const ingredients = suggestion.title?.includes("smoothie") ? 
         ["1 frozen banana", "1/2 cup frozen berries", "1 cup almond milk", "1 tbsp chia seeds", "1/4 cup granola"] :
@@ -106,6 +157,210 @@ export const SuggestionCard = ({ suggestion, index }: SuggestionCardProps) => {
         </div>
       );
     }
+    
+    if (suggestionType === "route") {
+      // Traffic and route details
+      const distance = "7.2 miles";
+      const trafficCondition = suggestion.title?.includes("traffic") ? "Heavy traffic" : "Light traffic";
+      const alternateRoutes = ["Main St → Park Ave → 5th St", "Highway 101 → Exit 24 → Downtown"];
+      
+      return (
+        <div className="mt-3 pt-3 border-t border-muted">
+          <div className="flex justify-between text-sm mb-2">
+            <span className="font-medium">Distance:</span>
+            <span>{distance}</span>
+          </div>
+          <div className="flex items-center text-sm mb-2">
+            <Map className="w-4 h-4 mr-1 text-muted-foreground" />
+            <span>{trafficCondition}</span>
+          </div>
+          <div className="mb-2">
+            <div className="text-sm font-medium mb-1">Alternate routes:</div>
+            <ul className="text-xs pl-2">
+              {alternateRoutes.map((route, i) => (
+                <li key={i} className="mb-1">{route}</li>
+              ))}
+            </ul>
+          </div>
+          <Button 
+            size="sm" 
+            className="w-full mt-1"
+            onClick={(e) => {
+              e.stopPropagation();
+              alert(`Opening maps for directions`);
+            }}
+          >
+            <Map className="mr-1 h-4 w-4" />
+            Get Directions
+          </Button>
+        </div>
+      );
+    }
+    
+    if (suggestionType === "meeting") {
+      // Meeting details
+      const participants = ["Alex Johnson", "Sarah Chen", "Marco Diaz"];
+      const location = "Conference Room B";
+      const meetingAgenda = ["Project status update (10 min)", "Resource planning (15 min)", "Timeline review (10 min)"];
+      
+      return (
+        <div className="mt-3 pt-3 border-t border-muted">
+          <div className="mb-2">
+            <div className="text-sm font-medium mb-1">Participants:</div>
+            <p className="text-xs">{participants.join(", ")}</p>
+          </div>
+          <div className="mb-2">
+            <div className="text-sm font-medium mb-1">Location:</div>
+            <p className="text-xs">{location}</p>
+          </div>
+          <div className="mb-3">
+            <div className="text-sm font-medium mb-1">Agenda:</div>
+            <ul className="text-xs pl-5 list-disc">
+              {meetingAgenda.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex gap-2">
+            <Button 
+              size="sm" 
+              className="flex-1"
+              onClick={(e) => {
+                e.stopPropagation();
+                alert(`Joining meeting`);
+              }}
+            >
+              Join
+            </Button>
+            <Button 
+              size="sm"
+              variant="outline" 
+              className="flex-1"
+              onClick={(e) => {
+                e.stopPropagation();
+                alert(`Meeting agenda sent to your email`);
+              }}
+            >
+              <Mail className="mr-1 h-4 w-4" />
+              Email Agenda
+            </Button>
+          </div>
+        </div>
+      );
+    }
+    
+    if (suggestionType === "event") {
+      // Event details
+      const venue = "Civic Center Auditorium";
+      const date = "Oct 15, 2025";
+      const time = "7:30 PM";
+      const price = "$45.00";
+      
+      return (
+        <div className="mt-3 pt-3 border-t border-muted">
+          <div className="flex text-sm mb-2">
+            <span className="font-medium w-16">Venue:</span>
+            <span>{venue}</span>
+          </div>
+          <div className="flex text-sm mb-2">
+            <span className="font-medium w-16">Date:</span>
+            <span>{date}</span>
+          </div>
+          <div className="flex text-sm mb-2">
+            <span className="font-medium w-16">Time:</span>
+            <span>{time}</span>
+          </div>
+          <div className="flex text-sm mb-3">
+            <span className="font-medium w-16">Price:</span>
+            <span>{price}</span>
+          </div>
+          <Button 
+            size="sm" 
+            className="w-full mt-1"
+            onClick={(e) => {
+              e.stopPropagation();
+              alert(`Ticket purchase initiated for ${suggestion.title}`);
+            }}
+          >
+            <Ticket className="mr-1 h-4 w-4" />
+            Buy Tickets
+          </Button>
+        </div>
+      );
+    }
+    
+    if (suggestionType === "document") {
+      // Document details
+      const fileType = "PDF";
+      const size = "2.4 MB";
+      const lastModified = "Yesterday, 3:45 PM";
+      const sharedWith = ["Marketing Team", "Project Leads"];
+      
+      return (
+        <div className="mt-3 pt-3 border-t border-muted">
+          <div className="flex text-sm mb-1">
+            <span className="font-medium w-24">File type:</span>
+            <span>{fileType}</span>
+          </div>
+          <div className="flex text-sm mb-1">
+            <span className="font-medium w-24">Size:</span>
+            <span>{size}</span>
+          </div>
+          <div className="flex text-sm mb-1">
+            <span className="font-medium w-24">Last modified:</span>
+            <span>{lastModified}</span>
+          </div>
+          <div className="flex text-sm mb-3">
+            <span className="font-medium w-24">Shared with:</span>
+            <span>{sharedWith.join(", ")}</span>
+          </div>
+          <div className="flex gap-2">
+            <Button 
+              size="sm" 
+              className="flex-1"
+              onClick={(e) => {
+                e.stopPropagation();
+                alert(`Opening document: ${suggestion.title}`);
+              }}
+            >
+              <FileText className="mr-1 h-4 w-4" />
+              Open
+            </Button>
+            <Button 
+              size="sm"
+              variant="outline" 
+              className="flex-1"
+              onClick={(e) => {
+                e.stopPropagation();
+                alert(`Document downloaded: ${suggestion.title}`);
+              }}
+            >
+              Download
+            </Button>
+          </div>
+        </div>
+      );
+    }
+    
+    // Default expandable content for general suggestions
+    return (
+      <div className="mt-3 pt-3 border-t border-muted">
+        <div className="text-sm mb-3">
+          <p>Additional information about this suggestion is not available.</p>
+        </div>
+        <Button 
+          size="sm" 
+          className="w-full"
+          onClick={(e) => {
+            e.stopPropagation();
+            alert(`Action taken for: ${suggestion.title}`);
+          }}
+        >
+          <Calendar className="mr-1 h-4 w-4" />
+          Add to Calendar
+        </Button>
+      </div>
+    );
   };
 
   const renderContent = () => {
