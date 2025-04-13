@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { format, addDays, subDays, isSameDay } from "date-fns";
 import { TimeSlot } from "./TimeSlot";
@@ -10,21 +11,24 @@ export const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const hours = Array.from({ length: 15 }, (_, i) => i + 8); // 8 AM to 10 PM
 
-  // Add a lunch event at 2 PM instead of 12 PM to match the existing lunch event
+  // Add a lunch event at 2 PM
   const lunchEvent: Event = {
     id: "lunch-event",
     title: "Lunch Time",
     time: "2:00 PM",
     hourIndex: 14, // 2 PM
-    category: "lunch",
-    suggestions: [] // This will be populated from Supabase
+    category: "lunch", // Explicitly set lunch category
+    suggestions: [] // Will be populated from Supabase
   };
 
-  // Combine static events with the lunch event
-  // We're filtering out any existing lunch events to avoid duplicates
-  const existingLunchEvent = events.find(event => event.category === "lunch");
+  // Find if there's an existing lunch event in our static events
+  const existingLunchEvent = events.find(event => 
+    event.category === "lunch" || 
+    event.title.toLowerCase().includes('lunch')
+  );
   console.log("Existing lunch event:", existingLunchEvent);
   
+  // If there's no lunch event, add our custom one
   const allEvents = existingLunchEvent 
     ? events // Keep original events if lunch already exists
     : [...events, lunchEvent]; // Add our lunch event if none exists

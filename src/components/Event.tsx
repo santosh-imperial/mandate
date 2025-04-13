@@ -28,12 +28,21 @@ export const Event = ({ event }: EventProps) => {
   // Get color based on category, default to "other" if no category is specified
   const categoryColor = event.category ? categoryColors[event.category] : categoryColors.other;
 
+  // Debug information
+  console.log(`Rendering event: ${event.title}, Category: ${event.category}`);
+  
   useEffect(() => {
-    // Only fetch lunch suggestions if this is a lunch category event
-    if (event.category === 'lunch') {
+    // Check if this is a lunch category event - show debug info
+    console.log(`Event ${event.title} - Category check:`, 
+      event.category === 'lunch' || 
+      event.title.toLowerCase().includes('lunch')
+    );
+    
+    // Only fetch lunch suggestions if this is a lunch category event OR if the title contains "lunch"
+    if (event.category === 'lunch' || event.title.toLowerCase().includes('lunch')) {
       const fetchLunchRecommendations = async () => {
         setIsLunchLoading(true);
-        console.log('Fetching lunch recommendations for lunch event:', event.title);
+        console.log('Fetching lunch recommendations for event:', event.title);
         try {
           // Fetch most recent 3 lunch recommendations
           const { data, error } = await supabase
@@ -57,8 +66,8 @@ export const Event = ({ event }: EventProps) => {
           // Transform the lunch data to match the Suggestion type
           if (data && data.length > 0) {
             const lunchSuggestions = data.map(item => ({
-              id: item.id,
-              type: (item.type || 'food-order') as ContentType, // Cast to ContentType
+              id: item.id || `lunch-${Math.random().toString(36)}`,
+              type: (item.type || 'food-order') as ContentType,
               title: item.title || 'Lunch Option',
               description: item.description || 'A delicious lunch option',
               imageUrl: item.image_url,
@@ -94,7 +103,7 @@ export const Event = ({ event }: EventProps) => {
 
       fetchLunchRecommendations();
     }
-  }, [event.category]);
+  }, [event.category, event.title]);
 
   return (
     <div className="group flex gap-4 pt-1 w-full min-h-[70px]">
@@ -120,7 +129,7 @@ export const Event = ({ event }: EventProps) => {
               <SuggestionCarousel suggestions={lunchSuggestions} />
             ) : (
               <div className="text-muted-foreground text-sm italic">
-                {event.category === 'lunch' ? 
+                {(event.category === 'lunch' || event.title.toLowerCase().includes('lunch')) ? 
                   "No lunch recommendations available. Please add some to the mandate_lunch table." :
                   "No suggestions available for this event."}
               </div>
