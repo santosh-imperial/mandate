@@ -1,5 +1,5 @@
 
-import { Event as EventType } from "@/lib/types";
+import { Event as EventType, ContentType } from "@/lib/types";
 import { SuggestionCarousel } from "./SuggestionCarousel";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
@@ -49,7 +49,7 @@ export const Event = ({ event }: EventProps) => {
           if (data && data.length > 0) {
             const lunchSuggestions = data.map(item => ({
               id: item.id,
-              type: item.type || 'food-order',
+              type: (item.type || 'food-order') as ContentType, // Cast to ContentType
               title: item.title,
               description: item.description,
               imageUrl: item.image_url,
