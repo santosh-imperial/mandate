@@ -23,12 +23,18 @@ export const Calendar = () => {
   // Combine static events with the lunch event
   // We're filtering out any existing lunch events to avoid duplicates
   const existingLunchEvent = events.find(event => event.category === "lunch");
+  console.log("Existing lunch event:", existingLunchEvent);
+  
   const allEvents = existingLunchEvent 
     ? events // Keep original events if lunch already exists
     : [...events, lunchEvent]; // Add our lunch event if none exists
+    
+  console.log("All events:", allEvents);
 
   const getEventsForHour = (hour: number): Event | undefined => {
-    return allEvents.find(event => event.hourIndex === hour);
+    const event = allEvents.find(event => event.hourIndex === hour);
+    console.log(`Events for hour ${hour}:`, event);
+    return event;
   };
 
   const goToPreviousDay = () => {

@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "@/components/ui/use-toast";
 
 interface EventProps {
   event: EventType;
@@ -32,7 +33,7 @@ export const Event = ({ event }: EventProps) => {
     if (event.category === 'lunch') {
       const fetchLunchRecommendations = async () => {
         setIsLunchLoading(true);
-        console.log('Fetching lunch recommendations...');
+        console.log('Fetching lunch recommendations for lunch event:', event.title);
         try {
           // Fetch most recent 3 lunch recommendations
           const { data, error } = await supabase
@@ -43,10 +44,15 @@ export const Event = ({ event }: EventProps) => {
 
           if (error) {
             console.error('Error fetching lunch recommendations:', error);
+            toast({
+              title: "Error fetching lunch recommendations",
+              description: error.message,
+              variant: "destructive"
+            });
             return;
           }
 
-          console.log('Lunch recommendations data:', data);
+          console.log('Raw lunch recommendations data:', data);
 
           // Transform the lunch data to match the Suggestion type
           if (data && data.length > 0) {
@@ -67,10 +73,20 @@ export const Event = ({ event }: EventProps) => {
             console.log('Transformed lunch suggestions:', lunchSuggestions);
             setLunchSuggestions(lunchSuggestions);
           } else {
-            console.log('No lunch recommendations found');
+            console.log('No lunch recommendations found in the database');
+            toast({
+              title: "No lunch recommendations",
+              description: "No lunch recommendations found in the database. Please add some to the mandate_lunch table.",
+              variant: "default"
+            });
           }
         } catch (error) {
           console.error('Unexpected error fetching lunch recommendations:', error);
+          toast({
+            title: "Error fetching lunch recommendations",
+            description: "An unexpected error occurred",
+            variant: "destructive"
+          });
         } finally {
           setIsLunchLoading(false);
         }
