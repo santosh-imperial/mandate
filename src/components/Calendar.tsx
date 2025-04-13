@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { format, addDays, subDays, isSameDay } from "date-fns";
 import { TimeSlot } from "./TimeSlot";
@@ -11,18 +10,22 @@ export const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const hours = Array.from({ length: 15 }, (_, i) => i + 8); // 8 AM to 10 PM
 
-  // Add a lunch event at 12 PM (noon)
+  // Add a lunch event at 2 PM instead of 12 PM to match the existing lunch event
   const lunchEvent: Event = {
     id: "lunch-event",
     title: "Lunch Time",
-    time: "12:00 PM",
-    hourIndex: 12, // 12 PM
+    time: "2:00 PM",
+    hourIndex: 14, // 2 PM
     category: "lunch",
     suggestions: [] // This will be populated from Supabase
   };
 
   // Combine static events with the lunch event
-  const allEvents = [...events, lunchEvent];
+  // We're filtering out any existing lunch events to avoid duplicates
+  const existingLunchEvent = events.find(event => event.category === "lunch");
+  const allEvents = existingLunchEvent 
+    ? events // Keep original events if lunch already exists
+    : [...events, lunchEvent]; // Add our lunch event if none exists
 
   const getEventsForHour = (hour: number): Event | undefined => {
     return allEvents.find(event => event.hourIndex === hour);

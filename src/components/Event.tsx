@@ -32,6 +32,7 @@ export const Event = ({ event }: EventProps) => {
     if (event.category === 'lunch') {
       const fetchLunchRecommendations = async () => {
         setIsLunchLoading(true);
+        console.log('Fetching lunch recommendations...');
         try {
           // Fetch most recent 3 lunch recommendations
           const { data, error } = await supabase
@@ -45,13 +46,15 @@ export const Event = ({ event }: EventProps) => {
             return;
           }
 
+          console.log('Lunch recommendations data:', data);
+
           // Transform the lunch data to match the Suggestion type
           if (data && data.length > 0) {
             const lunchSuggestions = data.map(item => ({
               id: item.id,
               type: (item.type || 'food-order') as ContentType, // Cast to ContentType
-              title: item.title,
-              description: item.description,
+              title: item.title || 'Lunch Option',
+              description: item.description || 'A delicious lunch option',
               imageUrl: item.image_url,
               // Additional properties that might be used by the SuggestionCard
               price: item.price,
@@ -61,7 +64,10 @@ export const Event = ({ event }: EventProps) => {
               instructions: item.instructions
             }));
             
+            console.log('Transformed lunch suggestions:', lunchSuggestions);
             setLunchSuggestions(lunchSuggestions);
+          } else {
+            console.log('No lunch recommendations found');
           }
         } catch (error) {
           console.error('Unexpected error fetching lunch recommendations:', error);
@@ -93,7 +99,17 @@ export const Event = ({ event }: EventProps) => {
             <Skeleton className="h-20 w-60 rounded-lg" />
           </div>
         ) : (
-          <SuggestionCarousel suggestions={lunchSuggestions} />
+          <>
+            {lunchSuggestions && lunchSuggestions.length > 0 ? (
+              <SuggestionCarousel suggestions={lunchSuggestions} />
+            ) : (
+              <div className="text-muted-foreground text-sm italic">
+                {event.category === 'lunch' ? 
+                  "No lunch recommendations available. Please add some to the mandate_lunch table." :
+                  "No suggestions available for this event."}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
