@@ -13,9 +13,10 @@ export type EventCategory =
   | 'meeting'
   | 'travel'
   | 'routine'
-  | 'focus';
+  | 'focus'
+  | 'lunch';
 
-export type ContentType = "text" | "image" | "graph" | "link" | "news";
+export type ContentType = "text" | "image" | "graph" | "link" | "news" | "food-order";
 
 export interface NewsItem {
   title: string;
@@ -35,6 +36,12 @@ export interface Suggestion {
   source?: string;
   date?: string;
   content?: NewsItem[];
+  // Additional properties for lunch recommendations
+  price?: number;
+  deliveryTime?: string;
+  restaurant?: string;
+  ingredients?: any;
+  instructions?: string;
 }
 
 export interface Task {

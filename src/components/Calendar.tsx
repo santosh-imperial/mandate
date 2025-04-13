@@ -11,8 +11,21 @@ export const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const hours = Array.from({ length: 15 }, (_, i) => i + 8); // 8 AM to 10 PM
 
+  // Add a lunch event at 12 PM (noon)
+  const lunchEvent: Event = {
+    id: "lunch-event",
+    title: "Lunch Time",
+    time: "12:00 PM",
+    hourIndex: 12, // 12 PM
+    category: "lunch",
+    suggestions: [] // This will be populated from Supabase
+  };
+
+  // Combine static events with the lunch event
+  const allEvents = [...events, lunchEvent];
+
   const getEventsForHour = (hour: number): Event | undefined => {
-    return events.find(event => event.hourIndex === hour);
+    return allEvents.find(event => event.hourIndex === hour);
   };
 
   const goToPreviousDay = () => {
@@ -98,6 +111,7 @@ export const Calendar = () => {
         <div className="bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300 text-xs px-2 py-1 rounded">Travel</div>
         <div className="bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300 text-xs px-2 py-1 rounded">Routine</div>
         <div className="bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-300 text-xs px-2 py-1 rounded">Focus</div>
+        <div className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 text-xs px-2 py-1 rounded">Lunch</div>
       </div>
 
       <div className="border border-border rounded-xl overflow-hidden shadow-sm bg-background">
